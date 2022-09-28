@@ -1,0 +1,17 @@
+.category {
+	&__title {
+		margin-bottom: 24px;
+	}
+
+	&__list {
+		padding-top: 0;
+		padding-bottom: 0;
+		padding-left: 16px;
+		padding-right: 16px;
+		margin: 0;
+		list-style: none;
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		grid-gap: 32px 24px;
+	}
+}

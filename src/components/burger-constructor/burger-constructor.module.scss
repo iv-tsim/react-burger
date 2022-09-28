@@ -18,16 +18,16 @@
 	overflow-y: auto;
 	margin-top: 16px;
 	margin-bottom: 16px;
-	
+
 	&::-webkit-scrollbar {
 		width: 8px;
 	}
-	
+
 	&::-webkit-scrollbar-thumb {
 		background-color: var(--text-inactive-color);
 		border: 3px solid var(--text-inactive-color);
 	}
-	
+
 	&::-webkit-scrollbar-track {
 		width: 8px;
 		background-color: var(--background-element);

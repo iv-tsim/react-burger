@@ -3,25 +3,16 @@
 	padding: 16px 0;
 }
 
-.container {
+.nav {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 }
 
-.nav {
+.menu {
+	list-style: none;
+	padding: 0;
+	margin: 0;
 	display: flex;
 	gap: 8px;
-}
-
-.link {
-	padding: 20px;
-	display: flex;
-	align-items: center;
-	text-decoration: none;
-	color: var(--text-primary-color);
-
-	&__text {
-		margin-left: 8px;
-	}
 }

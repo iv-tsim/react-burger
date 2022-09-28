@@ -1,30 +1,26 @@
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import appHeaderStyles from './app-header.module.scss';
+import HeaderLink from '../header-link/header-link';
 
 const AppHeader = () => {
 	return (
 		<header className={`${appHeaderStyles.header}`}>
-			<div className={`container container_wide ${appHeaderStyles.container}`}>
-				<nav className={appHeaderStyles.nav}>
-					<a href="/" className={`${appHeaderStyles.link}`}>
-						<BurgerIcon />
-						<span className={`text text_type_main-default ${appHeaderStyles.link__text}`}>Конструктор</span>
-					</a>
-					<a href="/" className={`${appHeaderStyles.link}`}>
-						<ListIcon />
-						<span className={`text text_type_main-default ${appHeaderStyles.link__text}`}>Лента заказов</span>
-					</a>
-				</nav>
+			<nav className={`container container_wide ${appHeaderStyles.nav}`}>
+				<ul className={`${appHeaderStyles.menu}`}>
+					<li>
+						<HeaderLink active={true} icon={BurgerIcon} text={'Конструктор'} />
+					</li>
+					<li>
+						<HeaderLink icon={ListIcon} text={'Лента заказов'} />
+					</li>
+				</ul>
 				<a href="/">
 					<Logo />
 				</a>
-				<a href="/" className={`${appHeaderStyles.link}`}>
-					<ProfileIcon />
-					<span className={`text text_type_main-default ${appHeaderStyles.link__text}`}>Личный кабинет</span>
-				</a>
-			</div>
+				<HeaderLink icon={ProfileIcon} text={'Личный кабинет'} />
+			</nav>
 		</header>
-	)
-}
+	);
+};
 
 export default AppHeader;
