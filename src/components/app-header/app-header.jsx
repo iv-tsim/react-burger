@@ -8,16 +8,16 @@ const AppHeader = () => {
 			<nav className={`container container_wide ${appHeaderStyles.nav}`}>
 				<ul className={`${appHeaderStyles.menu}`}>
 					<li>
-						<HeaderLink active={true} icon={BurgerIcon} text={'Конструктор'} />
+						<HeaderLink active={true} icon={BurgerIcon} text="Конструктор" />
 					</li>
 					<li>
-						<HeaderLink icon={ListIcon} text={'Лента заказов'} />
+						<HeaderLink icon={ListIcon} text="Лента заказов" />
 					</li>
 				</ul>
 				<a href="/">
 					<Logo />
 				</a>
-				<HeaderLink icon={ProfileIcon} text={'Личный кабинет'} />
+				<HeaderLink icon={ProfileIcon} text="Личный кабинет" />
 			</nav>
 		</header>
 	);

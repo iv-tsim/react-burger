@@ -1,4 +1,5 @@
-import propTypes from '../../utils/prop-types';
+import PropTypes from 'prop-types';
+import { ingredientPropTypes } from '../../utils/ingredientPropTypes';
 import ingredientCategoryStyles from './ingredient-category.module.scss';
 import IngredientCard from '../ingredient-card/ingredient-card';
 
@@ -15,6 +16,9 @@ const IngredientCategory = ({ data, title }) => {
 	);
 };
 
-IngredientCategory.propTypes = propTypes;
+IngredientCategory.propTypes = {
+	data: PropTypes.arrayOf(ingredientPropTypes).isRequired,
+	title: PropTypes.string.isRequired,
+};
 
 export default IngredientCategory;

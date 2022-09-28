@@ -1,5 +1,6 @@
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ingredientCardStyles from './ingredient-card.module.scss';
+import PropTypes from 'prop-types';
 
 const IngredientCard = ({ image, price, name }) => {
 	return (
@@ -13,6 +14,12 @@ const IngredientCard = ({ image, price, name }) => {
 			<h3 className={`text text_type_main-default ${ingredientCardStyles.card__title}`}>{name}</h3>
 		</li>
 	);
+};
+
+IngredientCard.propTypes = {
+	image: PropTypes.string.isRequired,
+	price: PropTypes.number.isRequired,
+	name: PropTypes.string.isRequired,
 };
 
 export default IngredientCard;
