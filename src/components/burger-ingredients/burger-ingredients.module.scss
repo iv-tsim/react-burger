@@ -1,0 +1,42 @@
+.wrapper {
+	padding-top: 40px;
+}
+
+.title {
+	margin-bottom: 20px;
+}
+
+.tabs {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	margin-bottom: 40px;
+}
+
+.list {
+	max-height: 756px;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	overflow-y: auto;
+
+	&::-webkit-scrollbar {
+		width: 8px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: var(--text-inactive-color);
+		border: 3px solid var(--text-inactive-color);
+	}
+
+	&::-webkit-scrollbar-track {
+		width: 8px;
+		background-color: var(--background-element);
+		margin-bottom: 52px;
+	}
+}
+
+.item {
+	&:not(:last-child) {
+		margin-bottom: 40px;
+	}
+}

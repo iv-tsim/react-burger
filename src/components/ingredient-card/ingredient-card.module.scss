@@ -1,0 +1,27 @@
+.card {
+	position: relative;
+	cursor: pointer;
+
+	&__img {
+		max-width: calc(100% - 32px);
+		margin-inline: auto;
+		margin-bottom: 4px;
+		display: block;
+	}
+
+	&__price {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-bottom: 4px;
+	}
+
+	&__number {
+		margin-right: 8px;
+	}
+
+	&__title {
+		text-align: center;
+		min-height: 48px;
+	}
+}
