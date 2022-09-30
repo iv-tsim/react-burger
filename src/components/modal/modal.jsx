@@ -12,18 +12,21 @@ const Modal = ({ setIsOpened, children, title = '' }) => {
 		setIsOpened(false);
 	}, [setIsOpened]);
 
-	const onEscapePress = React.useCallback((e) => {
-		if (e.key === 'Escape') {
-			handleClose();
-		}
-	}, [handleClose])
+	const onEscapePress = React.useCallback(
+		(e) => {
+			if (e.key === 'Escape') {
+				handleClose();
+			}
+		},
+		[handleClose],
+	);
 
 	React.useEffect(() => {
 		document.addEventListener('keydown', onEscapePress);
-		
+
 		return () => {
 			document.removeEventListener('keydown', onEscapePress);
-		}
+		};
 	}, [onEscapePress]);
 
 	return ReactDOM.createPortal(
