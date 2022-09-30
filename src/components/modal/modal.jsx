@@ -47,7 +47,7 @@ const Modal = ({ onModalClose, children, title = '' }) => {
 };
 
 Modal.propTypes = {
-	setIsOpened: PropTypes.func.isRequired,
+	onModalClose: PropTypes.func.isRequired,
 	children: PropTypes.node,
 	title: PropTypes.string,
 };
