@@ -10,13 +10,17 @@ const IngredientCard = ({ data }) => {
 
 	const { image, name, price } = data;
 
+	const onModalOpen = () => {
+		setIsModalOpened(true);
+	};
+
+	const onModalClose = () => {
+		setIsModalOpened(false);
+	};
+
 	return (
 		<>
-			<li
-				className={`${ingredientCardStyles.card}`}
-				onClick={() => {
-					setIsModalOpened(true);
-				}}>
+			<li className={`${ingredientCardStyles.card}`} onClick={onModalOpen}>
 				<Counter count={1} size="default" />
 				<img src={image} alt={name} className={`${ingredientCardStyles.card__img}`} />
 				<div className={`${ingredientCardStyles.card__price}`}>
@@ -26,8 +30,8 @@ const IngredientCard = ({ data }) => {
 				<h3 className={`text text_type_main-default ${ingredientCardStyles.card__title}`}>{name}</h3>
 			</li>
 			{isModalOpened && (
-				<Modal setIsOpened={setIsModalOpened}>
-					<IngredientDetails {...data} />
+				<Modal onModalClose={onModalClose}>
+					<IngredientDetails data={data} />
 				</Modal>
 			)}
 		</>

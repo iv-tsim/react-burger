@@ -3,29 +3,40 @@ import AppHeader from '../app-header/app-header';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import appStyles from './application.module.scss';
-
-const DATA_LINK = 'https://norma.nomoreparties.space/api/ingredients';
+import getIngredientsData from '../../utils/burger-api';
 
 const Application = () => {
-	const [data, setData] = React.useState([]);
+	const [isLoading, setIsLoading] = React.useState(true);
+	const [info, setInfo] = React.useState({
+		status: '',
+		data: [],
+	});
 
 	React.useEffect(() => {
-		fetch(DATA_LINK)
-			.then((res) => res.json())
-			.then((res) => setData(res.data))
-			.catch((error) => {
-				throw new Error(error);
-			});
+		const WaitForResponse = async () => {
+			var data = await getIngredientsData();
+			setInfo(data);
+			setIsLoading(false);
+		};
+		WaitForResponse();
 	}, []);
 
 	return (
-		<>
+		<div className={appStyles.wrapper}>
 			<AppHeader />
 			<main className={`container ${appStyles.main}`}>
-				{data.length && <BurgerIngredients data={data} />}
-				{data.length && <BurgerConstructor data={data} />}
+				{isLoading ? (
+					<div className={`text text_type_main-large ${appStyles.loading}`}>Перерыв на загрузку данных...</div>
+				) : info.status === 'success' ? (
+					<div className={appStyles.homePage}>
+						<BurgerIngredients data={info.data} />
+						<BurgerConstructor data={info.data} />
+					</div>
+				) : (
+					<div className={`text text_type_main-large ${appStyles.loading}`}>Ошибка при получении данных</div>
+				)}
 			</main>
-		</>
+		</div>
 	);
 };
 

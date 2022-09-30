@@ -7,10 +7,10 @@ import React from 'react';
 
 const modalRoot = document.getElementById('modals');
 
-const Modal = ({ setIsOpened, children, title = '' }) => {
+const Modal = ({ onModalClose, children, title = '' }) => {
 	const handleClose = React.useCallback(() => {
-		setIsOpened(false);
-	}, [setIsOpened]);
+		onModalClose();
+	}, [onModalClose]);
 
 	const onEscapePress = React.useCallback(
 		(e) => {

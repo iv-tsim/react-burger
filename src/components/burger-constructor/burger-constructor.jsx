@@ -9,6 +9,14 @@ import OrderDetails from '../order-details/order-details';
 const BurgerConstructor = ({ data }) => {
 	const [isModalOpened, setIsModalOpened] = React.useState(false);
 
+	const onModalOpen = () => {
+		setIsModalOpened(true);
+	};
+
+	const onModalClose = () => {
+		setIsModalOpened(false);
+	};
+
 	return (
 		<>
 			<section className={`${burgerConstructorStyles.wrapper}`}>
@@ -33,19 +41,13 @@ const BurgerConstructor = ({ data }) => {
 						<div className={`text text_type_digits-medium ${burgerConstructorStyles.number}`}>610</div>
 						<CurrencyIcon />
 					</div>
-					<Button
-						onClick={() => {
-							setIsModalOpened(true);
-						}}
-						htmlType="button"
-						type="primary"
-						size="large">
+					<Button onClick={onModalOpen} htmlType="button" type="primary" size="large">
 						Оформить заказ
 					</Button>
 				</div>
 			</section>
 			{isModalOpened && (
-				<Modal setIsOpened={setIsModalOpened}>
+				<Modal onModalClose={onModalClose}>
 					<OrderDetails />
 				</Modal>
 			)}

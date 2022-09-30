@@ -1,6 +1,24 @@
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
 .main {
+	display: flex;
+	flex-grow: 1;
+}
+
+.homePage {
 	padding-bottom: 40px;
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
 	grid-gap: 40px;
+}
+
+.loading {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
 }
