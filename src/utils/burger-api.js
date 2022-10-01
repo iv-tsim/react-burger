@@ -5,20 +5,13 @@ const checkReponse = (res) => {
 	return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
 };
 
-const getIngredientsData = () => {
+export const getIngredientsData = () => {
 	return fetch(INGREDIENTS_URL)
 		.then((response) => checkReponse(response))
 		.then((response) => {
-			return {
-				status: 'success',
-				data: response.data,
-			};
+			return response.data;
 		})
-		.catch(() => {
-			return {
-				status: 'error',
-			};
+		.catch((error) => {
+			throw new Error(error);
 		});
 };
-
-export default getIngredientsData;
