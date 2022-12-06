@@ -5,7 +5,7 @@ import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import appStyles from './application.module.scss';
 import { INGREDIENT_TYPES } from '../../utils/types';
 import { getIngredientsData } from '../../utils/burger-api';
-import { IngredientsContext } from '../../utils/store/appContext';
+import { IngredientsContext } from '../../utils/context/appContext';
 
 const Application = () => {
 	const [isLoading, setIsLoading] = React.useState(true);

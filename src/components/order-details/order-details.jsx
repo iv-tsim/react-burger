@@ -1,7 +1,7 @@
 import React from 'react';
 import orderDonePath from '../../images/orderDone.svg';
 import OrderDetailsStyles from './order-details.module.scss';
-import { OrderContext } from '../../utils/store/appContext';
+import { OrderContext } from '../../utils/context/appContext';
 
 const OrderDetails = () => {
 	const { orderData, isError, isLoading } = React.useContext(OrderContext);

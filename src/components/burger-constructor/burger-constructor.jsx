@@ -3,7 +3,7 @@ import burgerConstructorStyles from './burger-constructor.module.scss';
 import React from 'react';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
-import { OrderContext, IngredientsContext } from '../../utils/store/appContext';
+import { OrderContext, IngredientsContext } from '../../utils/context/appContext';
 
 import { getOrderDetails } from '../../utils/burger-api';
 
