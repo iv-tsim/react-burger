@@ -1,5 +1,14 @@
 export const INGREDIENT_TYPES = {
-	BUN: 'bun',
-	MAIN: 'main',
-	SAUCE: 'sauce',
+	BUN: {
+		slug: 'bun',
+		title: 'Булки',
+	},
+	MAIN: {
+		slug: 'main',
+		title: 'Начинки',
+	},
+	SAUCE: {
+		slug: 'sauce',
+		title: 'Соусы',
+	},
 };

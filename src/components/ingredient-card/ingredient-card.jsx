@@ -4,24 +4,52 @@ import { ingredientPropTypes } from '../../utils/ingredientPropTypes';
 import React from 'react';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCurrentIngredient, clearCurrentIngredient } from '../../store/slices/ingredientDetailsSlice';
+import { useDrag } from 'react-dnd';
 
 const IngredientCard = ({ data }) => {
+	const dispatch = useDispatch();
 	const [isModalOpened, setIsModalOpened] = React.useState(false);
 
-	const { image, name, price } = data;
+	const { image, name, price, _id } = data;
+
+	const items = useSelector((store) => store.ingredientConstructor.items);
+
+	const isCurrentBun = items.bun?.data._id === _id;
+
+	let count = 0;
+
+	if (isCurrentBun) {
+		count = 2;
+	} else {
+		count = items.ingredients.filter((item) => item.data._id === _id).length;
+	}
+
+	const [{ isDrag }, dragRef] = useDrag({
+		type: 'ingredient',
+		item: {
+			data,
+		},
+		collect: (monitor) => ({
+			isDrag: monitor.isDragging(),
+		}),
+	});
 
 	const onModalOpen = () => {
+		dispatch(setCurrentIngredient(data));
 		setIsModalOpened(true);
 	};
 
 	const onModalClose = () => {
+		dispatch(clearCurrentIngredient());
 		setIsModalOpened(false);
 	};
 
 	return (
 		<>
-			<li className={`${ingredientCardStyles.card}`} onClick={onModalOpen}>
-				<Counter count={1} size="default" />
+			<li ref={dragRef} className={`${ingredientCardStyles.card} ${isDrag ? ingredientCardStyles.card_dragging : ''}`} onClick={onModalOpen}>
+				<Counter count={count} size="default" />
 				<img src={image} alt={name} className={`${ingredientCardStyles.card__img}`} />
 				<div className={`${ingredientCardStyles.card__price}`}>
 					<span className={`text text_type_digits-default ${ingredientCardStyles.card__number}`}>{price}</span>
@@ -31,7 +59,7 @@ const IngredientCard = ({ data }) => {
 			</li>
 			{isModalOpened && (
 				<Modal onModalClose={onModalClose}>
-					<IngredientDetails data={data} />
+					<IngredientDetails />
 				</Modal>
 			)}
 		</>

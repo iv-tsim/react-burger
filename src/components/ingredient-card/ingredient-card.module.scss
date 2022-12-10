@@ -1,6 +1,8 @@
 .card {
 	position: relative;
 	cursor: pointer;
+	border: 1px solid transparent;
+	transition: 0.3s border-color;
 
 	&__img {
 		max-width: calc(100% - 32px);
@@ -23,5 +25,9 @@
 	&__title {
 		text-align: center;
 		min-height: 48px;
+	}
+
+	&_dragging {
+		border-color: #4c4cff;
 	}
 }

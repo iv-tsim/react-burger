@@ -3,53 +3,35 @@ import AppHeader from '../app-header/app-header';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import appStyles from './application.module.scss';
-import { INGREDIENT_TYPES } from '../../utils/types';
-import { getIngredientsData } from '../../utils/burger-api';
-import { IngredientsContext } from '../../utils/context/appContext';
+
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchIngredients } from '../../store/slices/ingredientsSlice';
 
 const Application = () => {
-	const [isLoading, setIsLoading] = React.useState(true);
-	const [isError, setIsError] = React.useState(false);
-	const [data, setData] = React.useState([]);
+	const dispatch = useDispatch();
 
-	const constructorData = {
-		bun: data
-			.filter((item) => item.type === INGREDIENT_TYPES.BUN)
-			.sort(() => Math.random() - Math.random())
-			.slice(0, 1)[0],
-		ingredients: data
-			.filter((item) => item.type !== INGREDIENT_TYPES.BUN)
-			.sort(() => Math.random() - Math.random())
-			.slice(0, 5),
-	};
+	const status = useSelector((store) => store.ingredients.status);
 
 	React.useEffect(() => {
-		const WaitForResponse = async () => {
-			try {
-				var data = await getIngredientsData();
-				setData(data);
-				setIsLoading(false);
-			} catch {
-				setIsLoading(false);
-				setIsError(true);
-			}
-		};
-		WaitForResponse();
-	}, []);
+		dispatch(fetchIngredients());
+	}, [dispatch]);
 
 	const getAppContent = () => {
-		if (isLoading) {
+		if (status === 'loading') {
 			return <div className={`text text_type_main-large ${appStyles.loading}`}>Перерыв на загрузку данных...</div>;
 		}
-		if (isError) {
+		if (status === 'error') {
 			return <div className={`text text_type_main-large ${appStyles.loading}`}>Ошибка при получении данных</div>;
 		}
 		return (
 			<div className={appStyles.homePage}>
-				<BurgerIngredients data={data} />
-				<IngredientsContext.Provider value={constructorData}>
+				<DndProvider backend={HTML5Backend}>
+					<BurgerIngredients />
 					<BurgerConstructor />
-				</IngredientsContext.Provider>
+				</DndProvider>
 			</div>
 		);
 	};

@@ -10,7 +10,7 @@ export const getIngredientsData = () => {
 	return fetch(INGREDIENTS_URL)
 		.then((response) => checkReponse(response))
 		.then((response) => {
-			return response.data;
+			return response;
 		})
 		.catch((error) => {
 			throw new Error(error);
