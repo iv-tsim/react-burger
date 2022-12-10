@@ -1,15 +1,35 @@
 import { ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerConstructorStyles from './burger-constructor.module.scss';
-import PropTypes from 'prop-types';
-import { ingredientPropTypes } from '../../utils/ingredientPropTypes';
 import React from 'react';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
+import { OrderContext, IngredientsContext } from '../../utils/context/appContext';
 
-const BurgerConstructor = ({ data }) => {
+import { getOrderDetails } from '../../utils/burger-api';
+
+const BurgerConstructor = () => {
 	const [isModalOpened, setIsModalOpened] = React.useState(false);
+	const [isError, setIsError] = React.useState(false);
+	const [orderData, setOrderData] = React.useState(null);
+	const [isLoading, setIsLoading] = React.useState(true);
+
+	const constructorData = React.useContext(IngredientsContext);
 
 	const onModalOpen = () => {
+		const WaitForResponse = async () => {
+			try {
+				var data = await getOrderDetails({
+					ingredients: constructorData.ingredients.map((item) => item._id),
+				});
+				setOrderData(data);
+				setIsError(false);
+				setIsLoading(false);
+			} catch {
+				setIsLoading(false);
+				setIsError(true);
+			}
+		};
+		WaitForResponse();
 		setIsModalOpened(true);
 	};
 
@@ -22,10 +42,10 @@ const BurgerConstructor = ({ data }) => {
 			<section className={`${burgerConstructorStyles.wrapper}`}>
 				<div className={`${burgerConstructorStyles.main}`}>
 					<div className={`${burgerConstructorStyles.bun}`}>
-						<ConstructorElement {...data[0]} type="top" text={data[0].name} thumbnail={data[0].image} />
+						<ConstructorElement {...constructorData.bun} type="top" text={constructorData.bun.name} thumbnail={constructorData.bun.image} />
 					</div>
 					<ul className={`${burgerConstructorStyles.list}`}>
-						{data.map((element) => (
+						{constructorData.ingredients.map((element) => (
 							<li key={element._id} className={`${burgerConstructorStyles.item}`}>
 								<DragIcon />
 								<ConstructorElement {...element} text={element.name} thumbnail={element.image} />
@@ -33,12 +53,14 @@ const BurgerConstructor = ({ data }) => {
 						))}
 					</ul>
 					<div className={`${burgerConstructorStyles.bun}`}>
-						<ConstructorElement {...data[0]} type="bottom" text={data[0].name} thumbnail={data[0].image} />
+						<ConstructorElement {...constructorData.bun} type="bottom" text={constructorData.bun.name} thumbnail={constructorData.bun.image} />
 					</div>
 				</div>
 				<div className={`${burgerConstructorStyles.bottom}`}>
 					<div className={`${burgerConstructorStyles.price}`}>
-						<div className={`text text_type_digits-medium ${burgerConstructorStyles.number}`}>610</div>
+						<div className={`text text_type_digits-medium ${burgerConstructorStyles.number}`}>
+							{constructorData.bun.price * 2 + constructorData.ingredients.reduce((sum, item) => (sum += item.price), 0)}
+						</div>
 						<CurrencyIcon />
 					</div>
 					<Button onClick={onModalOpen} htmlType="button" type="primary" size="large">
@@ -48,15 +70,13 @@ const BurgerConstructor = ({ data }) => {
 			</section>
 			{isModalOpened && (
 				<Modal onModalClose={onModalClose}>
-					<OrderDetails />
+					<OrderContext.Provider value={{ orderData, isError, isLoading }}>
+						<OrderDetails />
+					</OrderContext.Provider>
 				</Modal>
 			)}
 		</>
 	);
-};
-
-BurgerConstructor.propTypes = {
-	data: PropTypes.arrayOf(ingredientPropTypes).isRequired,
 };
 
 export default BurgerConstructor;
