@@ -9,9 +9,15 @@ const initialState = {
 };
 
 const getTotalPrice = (state) => {
-	const bunsPrice = state.items.bun.data.price * 2;
+	const bunsPrice = state.items.bun ? state.items.bun.data.price * 2 : 0;
 	const ingredientsPrice = state.items.ingredients.reduce((sum, ingredient) => (sum += ingredient.data.price), 0);
 	return ingredientsPrice + bunsPrice;
+};
+
+const swapItems = (array, originalIndex, newIndex) => {
+	const result = [...array];
+	[result[originalIndex], result[newIndex]] = [result[newIndex], result[originalIndex]];
+	return result;
 };
 
 export const constructorSlice = createSlice({
@@ -31,8 +37,11 @@ export const constructorSlice = createSlice({
 			state.totalPrice = getTotalPrice(state);
 		},
 		moveIngredient(state, action) {
-			state.items.ingredients = state.items.ingredients.filter((ingredient) => ingredient._id !== action.payload.data._id);
-			state.items.ingredients = state.items.ingredients.splice(action.payload.newIndex, 0, action.payload.data);
+			const newIndex = action.payload.newIndex;
+			if (newIndex < 0 || newIndex > state.items.ingredients.length) return;
+			const currentIndex = action.payload.currentIndex;
+
+			state.items.ingredients = swapItems(state.items.ingredients, currentIndex, newIndex);
 		},
 	},
 });
