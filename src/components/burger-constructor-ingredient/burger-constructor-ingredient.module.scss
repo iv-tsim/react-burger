@@ -1,0 +1,15 @@
+.item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	transition: 0.3s opacity;
+
+	> svg {
+		margin-right: 8px;
+		cursor: grab;
+	}
+
+	&_dragging {
+		opacity: 0.7;
+	}
+}

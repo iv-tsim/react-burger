@@ -1,20 +1,30 @@
 import React from 'react';
 import orderDonePath from '../../images/orderDone.svg';
 import OrderDetailsStyles from './order-details.module.scss';
-import { OrderContext } from '../../utils/context/appContext';
+
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchOrderDetails } from '../../store/slices/orderDetailsSlice';
 
 const OrderDetails = () => {
-	const { orderData, isError, isLoading } = React.useContext(OrderContext);
+	const dispatch = useDispatch();
+
+	const status = useSelector((store) => store.order.status);
+	const ingredients = useSelector((store) => store.ingredientConstructor.items);
+	const orderNumber = useSelector((store) => store.order.data?.order?.number);
+
+	React.useEffect(() => {
+		dispatch(fetchOrderDetails([ingredients.bun?.data._id, ...ingredients.ingredients.map((ingredient) => ingredient.data._id)]));
+	}, [dispatch, ingredients]);
 
 	return (
 		<div className={OrderDetailsStyles.wrapper}>
-			{isError ? (
+			{status === 'error' ? (
 				<div className={`text text_type_main-medium`}>Ошибка</div>
-			) : isLoading ? (
+			) : status === 'loading' ? (
 				<div className={`text text_type_main-medium`}>Загрузка...</div>
 			) : (
 				<>
-					<div className={`text text_type_digits-large ${OrderDetailsStyles.id}`}>{orderData.order.number}</div>
+					<div className={`text text_type_digits-large ${OrderDetailsStyles.id}`}>{orderNumber}</div>
 					<div className={`text text_type_main-medium ${OrderDetailsStyles.title}`}>идентификатор заказа</div>
 					<img src={orderDonePath} alt="успех" className={OrderDetailsStyles.image} />
 					<div className={OrderDetailsStyles.text}>

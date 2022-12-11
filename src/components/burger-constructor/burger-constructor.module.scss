@@ -5,6 +5,12 @@
 
 .main {
 	margin-bottom: 40px;
+	border: 1px solid transparent;
+	transition: 0.3s border-color;
+
+	&_hovered {
+		border-color: #4c4cff;
+	}
 }
 
 .list {
@@ -37,17 +43,6 @@
 .bun {
 	padding-left: 32px;
 	padding-right: 16px;
-}
-
-.item {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-
-	> svg {
-		margin-right: 8px;
-		cursor: grab;
-	}
 }
 
 .bottom {
