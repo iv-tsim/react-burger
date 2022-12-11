@@ -43,9 +43,16 @@ export const constructorSlice = createSlice({
 
 			state.items.ingredients = swapItems(state.items.ingredients, currentIndex, newIndex);
 		},
+		clearConstructor(state) {
+			state.items = {
+				bun: null,
+				ingredients: [],
+			};
+			state.totalPrice = 0;
+		},
 	},
 });
 
-export const { addIngredient, setBun, removeIngredient, moveIngredient } = constructorSlice.actions;
+export const { addIngredient, setBun, removeIngredient, moveIngredient, clearConstructor } = constructorSlice.actions;
 
 export default constructorSlice.reducer;

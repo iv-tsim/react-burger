@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getIngredientsData } from '../../utils/burger-api';
+import { fetchRequest, INGREDIENTS_URL } from '../../utils/burger-api';
 
 export const fetchIngredients = createAsyncThunk('ingredients/fetchIngredientsStatus', async () => {
-	const { data } = await getIngredientsData();
+	const { data } = await fetchRequest(INGREDIENTS_URL);
 	return data;
 });
 

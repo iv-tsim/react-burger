@@ -7,7 +7,7 @@ import OrderDetails from '../order-details/order-details';
 import BlankIngredient from '../blank-ingredient/blank-ingredient';
 import BurgerConstructorIngredient from '../burger-constructor-ingredient/burger-constructor-ingredient';
 import { useSelector, useDispatch } from 'react-redux';
-import { addIngredient, setBun } from '../../store/slices/constructorSlice';
+import { addIngredient, setBun, clearConstructor } from '../../store/slices/constructorSlice';
 import { useDrop } from 'react-dnd';
 import uuid from 'react-uuid';
 
@@ -54,6 +54,7 @@ const BurgerConstructor = () => {
 	};
 
 	const onModalClose = () => {
+		dispatch(clearConstructor());
 		setIsModalOpened(false);
 	};
 
@@ -63,7 +64,7 @@ const BurgerConstructor = () => {
 				<div ref={dropTarget} className={`${burgerConstructorStyles.main} ${isHover ? burgerConstructorStyles.main_hovered : ''}`}>
 					<div className={`${burgerConstructorStyles.bun}`}>
 						{bun ? (
-							<ConstructorElement {...bun.data} type="top" text={bun.data.name} thumbnail={bun.data.image} isLocked={true} />
+							<ConstructorElement {...bun.data} type="top" text={bun.data.name + ' (верх)'} thumbnail={bun.data.image} isLocked={true} />
 						) : (
 							<BlankIngredient type="top" text="Выберите булку" />
 						)}
@@ -81,7 +82,7 @@ const BurgerConstructor = () => {
 					)}
 					<div className={`${burgerConstructorStyles.bun}`}>
 						{bun ? (
-							<ConstructorElement {...bun.data} type="bottom" text={bun.data.name} thumbnail={bun.data.image} isLocked={true} />
+							<ConstructorElement {...bun.data} type="bottom" text={bun.data.name + ' (низ)'} thumbnail={bun.data.image} isLocked={true} />
 						) : (
 							<BlankIngredient type="bottom" text="Выберите булку" />
 						)}
@@ -92,7 +93,7 @@ const BurgerConstructor = () => {
 						<div className={`text text_type_digits-medium ${burgerConstructorStyles.number}`}>{totalPrice}</div>
 						<CurrencyIcon />
 					</div>
-					<Button onClick={onModalOpen} htmlType="button" type="primary" size="large">
+					<Button onClick={onModalOpen} htmlType="button" type="primary" size="large" disabled={!bun}>
 						Оформить заказ
 					</Button>
 				</div>

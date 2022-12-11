@@ -1,9 +1,15 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getOrderDetails } from '../../utils/burger-api';
+import { fetchRequest, ORDER_DETAILS_URL } from '../../utils/burger-api';
 
 export const fetchOrderDetails = createAsyncThunk('orderDetails/fetchOrderDetailsStatus', async (ingredientsIds) => {
-	const data = await getOrderDetails({
-		ingredients: ingredientsIds,
+	const data = await fetchRequest(ORDER_DETAILS_URL, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json;charset=utf-8',
+		},
+		body: JSON.stringify({
+			ingredients: ingredientsIds,
+		}),
 	});
 	return data;
 });
